@@ -15,7 +15,7 @@ var descriptorA1 = new BlenoDescriptor({
 var descriptorA2 = new BlenoDescriptor({
     uuid: '2902',
     value: 'valoreA2'
-});
+)};
 
 var caratteristica1 = new BlenoCharacteristic({
     uuid: 'fffffffffffffffffffffffffffffff1',
