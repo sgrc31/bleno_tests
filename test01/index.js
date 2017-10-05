@@ -8,12 +8,12 @@ var BlenoDescriptor = bleno.Descriptor;
 console.log('inizializzato bleno');
 
 var descriptorA1 = new BlenoDescriptor({
-    uuid: '2901',
+    uuid: 'b707df58-ce1b-4b47-8bf9-9a6b80812f1a',
     value: 'valoreA1'
 });
 
 var descriptorA2 = new BlenoDescriptor({
-    uuid: '2902',
+    uuid: '7e8dd020-6bc7-43d3-a1f0-37b954cceee6',
     value: 'valoreA2'
 });
 
