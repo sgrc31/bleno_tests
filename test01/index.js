@@ -8,13 +8,13 @@ var BlenoDescriptor = bleno.Descriptor;
 console.log('inizializzato bleno');
 
 var descriptorA1 = new BlenoDescriptor({
-    uuid = '2901',
-    value = 'valoreA1'
+    uuid: '2901',
+    value: 'valoreA1'
 )};
 
-var descriptorA2 = new BlenoDesciptor({
-    uuid = '2902',
-    value = 'valoreA2'
+var descriptorA2 = new BlenoDescriptor({
+    uuid: '2902',
+    value: 'valoreA2'
 });
 
 var caratteristica1 = new BlenoCharacteristic({
@@ -29,9 +29,12 @@ var mioPrimaryService = new BlenoPrimaryService({
     characteristics: [ 'caratteristica1' ]
 });
 
-bleno.state = poweredOn;
+bleno.on('stateChange', function(state) {
+  console.log('on -> stateChange: ' + state + ', address = ' + bleno.address);
 
-var name = 'name';
-var serviceUuids = ['fffffffffffffffffffffffffffffff0']
-
-bleno.startAdvertising(name, serviceUuids[, callback(error)]);
+  if (state === 'poweredOn') {
+    bleno.startAdvertising('miogatt', ['fffffffffffffffffffffffffffffff0']);
+  } else {
+    bleno.stopAdvertising();
+  }
+});
