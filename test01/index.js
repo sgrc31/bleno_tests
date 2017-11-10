@@ -3,7 +3,7 @@ var bleno = require('bleno');
 var charSettings = new bleno.Characteristic({
     uuid: 'fffffffffffffffffffffffffffffff2',
     properties: ['read', 'write'],
-    value: '1,3,6',
+    value: '2,2,2',
     onReadRequest: function(offset, callback) {
         console.log('Effettuata lettura su settings');
     },
