@@ -8,9 +8,19 @@ var charSettings = new bleno.Characteristic({
         console.log('Effettuata lettura su settings');
     },
     onWriteRequest: function(data, offset, withoutResponse, callback) {
-        console.log('Effettuata scrittura su settings= ' + data.toString('hex'));
+        console.log('on -> writeRequest, effettuata');
+        console.log('inviato -> ' + data.toString('hex') + ' hex notation');
+        console.log('inviato -> ' + data.toString('utf-8') + ' utf-8 notation');
+        console.log('inviato -> ' + data.toString() + ' normal notation');
         callback(this.RESULT_SUCCESS);
+        charSettings['value'] = data.toString();
+        console.log('printo update: ' + charSettings['value'] + ' ' + charSettings.value);
     }
+    //onWriteRequest: function(data, offset, withoutResponse, callback) {
+    //    this.value = data;
+    //    console.log('on -> writeRequest, effettuata');
+    //    console.log('inviato -> ' + this.value);
+    //}
 });
 
 var charIdSuoniCaptati = new bleno.Characteristic({
