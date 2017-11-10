@@ -28,7 +28,7 @@ var charIdSuoniCaptati = new bleno.Characteristic({
     properties: ['write'],
     value: null,
     onWriteRequest: function(data, offset, withoutResponse, callback) {
-        console.log('Effettuata scrittura su id suono registrato= ' + data.toString('hex'));
+        console.log('Effettuata scrittura su id suono registrato= ' + data.toString('utf-8'));
         callback(this.RESULT_SUCCESS);
     }
 });
