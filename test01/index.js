@@ -1,4 +1,14 @@
 var bleno = require('bleno');
+var gpio = require('rpi-gpio');
+
+//============================
+// setup gpio
+//============================
+gpio.setMode(gpio.MODE_RPI);
+gpio.setup(11, gpio.DIR_OUT);
+gpio.setup(18, gpio.DIR_OUT);
+console.log('gpio board settato');
+//============================
 
 var charSettings = new bleno.Characteristic({
     uuid: 'fffffffffffffffffffffffffffffff2',
@@ -29,6 +39,17 @@ var charIdSuoniCaptati = new bleno.Characteristic({
     value: null,
     onWriteRequest: function(data, offset, withoutResponse, callback) {
         console.log('Effettuata scrittura su id suono registrato= ' + data.toString('utf-8'));
+        if (data == 0) {
+            console.log('accendo pin 11');
+            gpio.write(11, true);
+            sleep.sleep(1);
+            gpio.write(11, false);
+        } else if (data == 1) {
+            console.log('accendo pin 18');
+            gpio.write(18, true);
+            sleep.sleep(1);
+            gpio.write(18, false);
+        }
         callback(this.RESULT_SUCCESS);
     }
 });
@@ -37,6 +58,7 @@ var MioServizioPrimario = new bleno.PrimaryService({
     uuid: 'fffffffffffffffffffffffffffffff0',
     characteristics: [charSettings, charIdSuoniCaptati]
 });
+
 
 
 //=====================
