@@ -1,6 +1,6 @@
 var bleno = require('bleno');
 //var gpio = require('rpi-gpio');
-var sleep = require('sleep');
+//var sleep = require('sleep');
 
 
 //============================
@@ -33,9 +33,7 @@ var charSettings = new bleno.Characteristic({
     },
     onWriteRequest: function(data, offset, withoutResponse, callback) {
         console.log('on -> writeRequest, effettuata');
-        console.log('inviato -> ' + data.toString('hex') + ' hex notation');
         console.log('inviato -> ' + data.toString('utf-8') + ' utf-8 notation');
-        console.log('inviato -> ' + data.toString() + ' normal notation');
         callback(this.RESULT_SUCCESS);
         charSettings['value'] = data.toString();
         console.log('printo update: ' + charSettings['value'] + ' ' + charSettings.value);
@@ -52,8 +50,17 @@ var charIdSuoniCaptati = new bleno.Characteristic({
     properties: ['write'],
     value: null,
     onWriteRequest: function(data, offset, withoutResponse, callback) {
-        console.log('Effettuata scrittura su id suono registrato= ' + data);
-        i2c1.sendByteSync(6, 0x01);
+        console.log('Effettuata scrittura su id suono registrato = ' + data);
+        if (data == 1) {
+            i2c1.sendByteSync(4, 0x01);
+            console.log('inviato 1 a master');
+        } else if (data == 2) {
+            i2c1.sendByteSync(4, 0x02);
+            console.log('inviato 2 a master');
+        } else if (data == 3) {
+            i2c1.sendByteSync(4, 0x03);
+            console.log('inviato 3 a master');
+        }
         callback(this.RESULT_SUCCESS);
     }
 });
