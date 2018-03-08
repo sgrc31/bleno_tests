@@ -1,12 +1,20 @@
 var bleno = require('bleno');
-//var gpio = require('rpi-gpio');
+var gpio = require('rpi-gpio');
 //var sleep = require('sleep');
 
 
 //============================
 // setup gpio
 //============================
-//gpio.setMode(gpio.MODE_RPI);
+gpio.setMode(gpio.MODE_RPI);
+gpio.on('change', function(channel, value) {
+    console.log('Rilevata pressione bottone, spengo tutto');
+    child_process.exec('sudo systemctl poweroff');
+    //console.log('Channel ' + channel + ' value is now ' + value);
+});
+gpio.setup(37, gpio.DIR_IN, gpio.EDGE_BOTH);
+gpio.setup(35, gpio.DIR_HIGH);
+console.log('gpio settato, shutdown alla pressione del bottone');
 //gpio.setup(11, gpio.DIR_OUT);
 //gpio.setup(18, gpio.DIR_OUT);
 //console.log('gpio board settato');
