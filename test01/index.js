@@ -1,27 +1,27 @@
 var bleno = require('bleno');
-var gpio = require('rpi-gpio');
+//var gpio = require('rpi-gpio');
 //var sleep = require('sleep');
 
 
 //============================
 // setup gpio
 //============================
-gpio.setMode(gpio.MODE_RPI);
+//gpio.setMode(gpio.MODE_RPI);
 //gpio.on('change', function(channel, value) {
 //    console.log('Rilevata pressione bottone, spengo tutto');
 //    child_process.exec('sudo systemctl poweroff');
     //console.log('Channel ' + channel + ' value is now ' + value);
 //});
 //gpio.setup(37, gpio.DIR_IN, gpio.EDGE_BOTH);
-gpio.setup(37, gpio.DIR_IN, readInputBottone);
-gpio.setup(35, gpio.DIR_HIGH);
+//gpio.setup(37, gpio.DIR_IN, readInputBottone);
+//gpio.setup(35, gpio.DIR_HIGH);
 
-function readInputBottone() {
-    gpio.read(37, function(err, value) {
-        console.log('The value is ' + value);
-    });
-}
-console.log('gpio settato, shutdown alla pressione del bottone');
+//function readInputBottone() {
+//    gpio.read(37, function(err, value) {
+//        console.log('The value is ' + value);
+//    });
+//}
+//console.log('gpio settato, shutdown alla pressione del bottone');
 //gpio.setup(11, gpio.DIR_OUT);
 //gpio.setup(18, gpio.DIR_OUT);
 //console.log('gpio board settato');
@@ -66,13 +66,13 @@ var charIdSuoniCaptati = new bleno.Characteristic({
     value: null,
     onWriteRequest: function(data, offset, withoutResponse, callback) {
         console.log('Effettuata scrittura su id suono registrato = ' + data);
-        if (data == 1) {
+        if (data == 0) {
             i2c1.sendByteSync(4, 0x01);
             console.log('inviato 1 a master');
-        } else if (data == 2) {
+        } else if (data == 1) {
             i2c1.sendByteSync(4, 0x02);
             console.log('inviato 2 a master');
-        } else if (data == 3) {
+        } else if (data == 2) {
             i2c1.sendByteSync(4, 0x03);
             console.log('inviato 3 a master');
         }
