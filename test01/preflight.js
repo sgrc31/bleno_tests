@@ -48,7 +48,7 @@ var charSettings = new bleno.Characteristic({
     },
     onWriteRequest: function(data, offset, withoutResponse, callback) {
         var miastringa = '0,'+ data.toString('utf-8');
-        var miobuffer = new Buffer(miastringa, utf-8);
+        var miobuffer = new Buffer(miastringa, 'utf-8');
         console.log('ho creato il pezzetto ' + miastringa);
         console.log('on -> writeRequest, effettuata');
         console.log('inviato -> ' + data.toString('utf-8') + ' utf-8 notation');
