@@ -47,8 +47,13 @@ var charSettings = new bleno.Characteristic({
         console.log('Effettuata lettura su settings');
     },
     onWriteRequest: function(data, offset, withoutResponse, callback) {
+        var miastringa = '0,' + data.toString('utf-8');
+        var miobuffer = new Buffer(miastringa, 'utf-8');
+        console.log('ho creato il pezzetto ' + miastringa);
         console.log('on -> writeRequest, effettuata');
         console.log('inviato -> ' + data.toString('utf-8') + ' utf-8 notation');
+        console.log('mo invio alla collana');
+        i2c1.i2cWriteSync(4, 7, miobuffer);
         callback(this.RESULT_SUCCESS);
         charSettings['value'] = data.toString();
         console.log('printo update: ' + charSettings['value'] + ' ' + charSettings.value);
@@ -67,13 +72,16 @@ var charIdSuoniCaptati = new bleno.Characteristic({
     onWriteRequest: function(data, offset, withoutResponse, callback) {
         console.log('Effettuata scrittura su id suono registrato = ' + data);
         if (data == 0) {
-            i2c1.sendByteSync(4, 0x01);
+            var miobuffer = new Buffer('1,0,0,0', 'utf-8');
+            i2c1.i2cWriteSync(4, 7, miobuffer);
             console.log('inviato 1 a master');
         } else if (data == 1) {
-            i2c1.sendByteSync(4, 0x02);
+            var miobuffer = new Buffer('2,0,0,0', 'utf-8');
+            i2c1.i2cWriteSync(4, 7, miobuffer);
             console.log('inviato 2 a master');
         } else if (data == 2) {
-            i2c1.sendByteSync(4, 0x03);
+            var miobuffer = new Buffer('3,0,0,0', 'utf-8');
+            i2c1.i2cWriteSync(4, 7, miobuffer);
             console.log('inviato 3 a master');
         }
         callback(this.RESULT_SUCCESS);
